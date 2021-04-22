@@ -5,7 +5,6 @@ import 'package:dio/dio.dart';
 class CourseCurriculumController {
   Future curriculum() async {
     try {
-      /*
       var curriculaCache = await HiveService.get('curricula');
       if (curriculaCache == false) {
         Response response = await UrlService.get('curricula');
@@ -14,9 +13,6 @@ class CourseCurriculumController {
 
       var curricula = await HiveService.get('curricula');
       return curricula[0];
-      */
-      Response response = await UrlService.get('curricula');
-      return response.data;
     } catch (e) {
       print(e);
       return false;
