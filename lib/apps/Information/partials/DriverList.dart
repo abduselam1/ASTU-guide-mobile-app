@@ -1,18 +1,44 @@
+import 'package:astu_guide/apps/Controller/EssentialInformationController.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DriverList extends StatelessWidget {
+class DriverList extends StatefulWidget {
   final data;
   DriverList({this.data});
 
   @override
+  _DriverListState createState() => _DriverListState();
+}
+
+class _DriverListState extends State<DriverList> {
+  int updated = 1;
+  @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: data.length,
-      itemBuilder: (context, index) {
-        print(data);
-        return listOfDrivers(context, data[index]);
+    return RefreshIndicator(
+      onRefresh: () async {
+        if (await EssentialInformationController.updateDrivers() == false) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('No internet Connection please try again'),
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Content successfuly updated'),
+            ),
+          );
+          setState(() {
+            updated = 1;
+          });
+        }
       },
+      child: ListView.builder(
+        itemCount: widget.data.length,
+        itemBuilder: (context, index) {
+          return listOfDrivers(context, widget.data[index]);
+        },
+      ),
     );
   }
 
@@ -29,10 +55,9 @@ class DriverList extends StatelessWidget {
             try {
               await launch("tel://${drivers['phone_number']}");
             } catch (e) {
-              print(drivers['phone_number']);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Cant call now!'),
+                  content: Text('Can\'t call now!'),
                 ),
               );
             }

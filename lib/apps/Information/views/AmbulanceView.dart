@@ -43,8 +43,7 @@ class _AmbulanceViewState extends State<AmbulanceView> {
         centerTitle: true,
       ),
       body: FutureBuilder(
-        future:
-            EssentialInformationController().ambulanceDrivers(searchKeyWord),
+        future: EssentialInformationController.ambulanceDrivers(searchKeyWord),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.data == false || snapshot.hasError) {

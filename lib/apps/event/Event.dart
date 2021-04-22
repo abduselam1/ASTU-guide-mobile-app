@@ -9,6 +9,8 @@ class Event extends StatefulWidget {
 }
 
 class _EventState extends State<Event> {
+
+  int updated=1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,8 +29,22 @@ class _EventState extends State<Event> {
 
             return RefreshIndicator(
               onRefresh: () async {
-                await Future.delayed(Duration(seconds: 2));
-                return null;
+                if (await EventController.updateCourse() == false) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('No internet Connection please try again'),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Content successfuly updated'),
+                    ),
+                  );
+                  setState(() {
+                    updated = 1;
+                  });
+                }
               },
               child: ListView.builder(
                 itemCount: snapshot.data.length,

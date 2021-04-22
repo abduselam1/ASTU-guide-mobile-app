@@ -2,9 +2,10 @@ import 'package:astu_guide/common/services/HiveService.dart';
 import 'package:astu_guide/common/services/url_service.dart';
 import 'package:dio/dio.dart';
 
-class CourseCurriculumController{
+class CourseCurriculumController {
   Future curriculum() async {
     try {
+      /*
       var curriculaCache = await HiveService.get('curricula');
       if (curriculaCache == false) {
         Response response = await UrlService.get('curricula');
@@ -13,6 +14,9 @@ class CourseCurriculumController{
 
       var curricula = await HiveService.get('curricula');
       return curricula[0];
+      */
+      Response response = await UrlService.get('curricula');
+      return response.data;
     } catch (e) {
       print(e);
       return false;
@@ -24,14 +28,22 @@ class CourseCurriculumController{
 
     return semester;
   }
-  
-  Map<String, List<List>> coursesPerYear(List courses) {
+
+  Map<String, List<List>> coursesPerYear(Map programs) {
+    List programInfo = programs['semester__course'];
+    List courses = programs['courses_curriculums'];
+
     Map<String, List<List>> program = {};
-    List<List> firstYear = [[], [], []];
-    List<List> secondYear = [[], [], []];
-    List<List> thirdYear = [[], [], []];
-    List<List> fourthYear = [[], [], []];
-    List<List> fifthYear = [[], [], []];
+
+    /*
+    the first three index of the array is refers to the three Semester 
+    and the last index refers to information of the year
+    */
+    List<List> firstYear = [[], [], [], []];
+    List<List> secondYear = [[], [], [], []];
+    List<List> thirdYear = [[], [], [], []];
+    List<List> fourthYear = [[], [], [], []];
+    List<List> fifthYear = [[], [], [], []];
 
     for (var i = 0; i < courses.length; i++) {
       int year = courses[i]['year'];
@@ -90,9 +102,74 @@ class CourseCurriculumController{
       }
     }
 
+    List infosYear1 = [[], []];
+    List infosYear2 = [[], []];
+    List infosYear3 = [[], []];
+    List infosYear4 = [[], []];
+    List infosYear5 = [[], []];
+
+    for (var i = 0; i < programInfo.length; i++) {
+      if (programInfo[i]['year'] == 1) {
+        if (programInfo[i]["semester"] == 1) {
+          infosYear1[0].insert(0, programInfo[i]["number_of_elective"]);
+          infosYear1[0].insert(1, programInfo[i]["number_of_free_elective"]);
+        } else {
+          infosYear1[1].insert(0, programInfo[i]["number_of_elective"]);
+          infosYear1[1].insert(1, programInfo[i]["number_of_free_elective"]);
+        }
+      }
+
+      if (programInfo[i]['year'] == 2) {
+        if (programInfo[i]["semester"] == 1) {
+          infosYear2[0].insert(0, programInfo[i]["number_of_elective"]);
+          infosYear2[0].insert(1, programInfo[i]["number_of_free_elective"]);
+        } else {
+          infosYear2[1].insert(0, programInfo[i]["number_of_elective"]);
+          infosYear2[1].insert(1, programInfo[i]["number_of_free_elective"]);
+        }
+      }
+
+      if (programInfo[i]['year'] == 3) {
+        if (programInfo[i]["semester"] == 1) {
+          infosYear3[0].insert(0, programInfo[i]["number_of_elective"]);
+          infosYear3[0].insert(1, programInfo[i]["number_of_free_elective"]);
+        } else {
+          infosYear3[1].insert(0, programInfo[i]["number_of_elective"]);
+          infosYear3[1].insert(1, programInfo[i]["number_of_free_elective"]);
+        }
+      }
+
+      if (programInfo[i]['year'] == 4) {
+        if (programInfo[i]["semester"] == 1) {
+          infosYear4[0].insert(0, programInfo[i]["number_of_elective"]);
+          infosYear4[0].insert(1, programInfo[i]["number_of_free_elective"]);
+        } else {
+          infosYear4[1].insert(0, programInfo[i]["number_of_elective"]);
+          infosYear4[1].insert(1, programInfo[i]["number_of_free_elective"]);
+        }
+      }
+
+      if (programInfo[i]['year'] == 5) {
+        if (programInfo[i]["semester"] == 1) {
+          infosYear5[0].insert(0, programInfo[i]["number_of_elective"]);
+          infosYear5[0].insert(1, programInfo[i]["number_of_free_elective"]);
+        } else {
+          infosYear5[1].insert(0, programInfo[i]["number_of_elective"]);
+          infosYear5[1].insert(1, programInfo[i]["number_of_free_elective"]);
+        }
+      }
+    }
+
+    firstYear.insert(3, infosYear1);
+    secondYear.insert(3, infosYear2);
+    thirdYear.insert(3, infosYear3);
+    fourthYear.insert(3, infosYear4);
+    fifthYear.insert(3, infosYear5);
+
+    // print(infosYear4);
     // print(thirdYear[2]);
     // print('-------');
-    // print(secondYear);
+    print(secondYear[3]);
     program['firstYear'] = firstYear;
     program['secondYear'] = secondYear;
     program['thirdYear'] = thirdYear;

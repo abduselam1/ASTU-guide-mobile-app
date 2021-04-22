@@ -9,7 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 // 192.168.0.248
 class UrlService {
-  static final String baseUrl = 'http://192.168.43.93:4000';
+  static final String baseUrl = 'http://192.168.112.1:4000';
   static final String apiEndPoint = "$baseUrl/api/v1/mobile";
   static final String assetUrl = "$baseUrl/storage";
   static Dio dio = new Dio();

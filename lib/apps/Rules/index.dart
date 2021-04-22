@@ -1,3 +1,4 @@
+import 'package:astu_guide/apps/Controller/RuleController.dart';
 import 'package:astu_guide/apps/Rules/partials/NetworkError.dart';
 import 'package:astu_guide/apps/Rules/partials/body.dart';
 import 'package:astu_guide/common/constants/astu_guide_theme.dart';
@@ -16,38 +17,6 @@ class Rule extends StatefulWidget {
 }
 
 class _RuleState extends State<Rule> {
-  Future rulesDataFromCache() async {
-    var rulesFromCache = await HiveService.get('rules');
-    if (rulesFromCache == false) {
-      var rulesFromDatabase = await fetchRulesAndRegulation();
-      if (rulesFromDatabase == false) return false;
-
-      await HiveService.put(boxName: 'rules', data: rulesFromDatabase);
-    }
-
-    Map rules = await HiveService.get('rules');
-    print(rules);
-    return rules[0];
-  }
-
-  Future fetchRulesAndRegulation() async {
-    if (await Connection().isConnected()) {
-      Response response = await UrlService.get('rules-and-regulations');
-      if (response.statusCode == 200) {
-        if (response.data == null) {
-          return false;
-        } else {
-          print(response.data[0]['id']);
-          return response.data;
-        }
-      } else {
-        // print("not worked");
-        return false;
-      }
-    } else
-      return false;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +25,7 @@ class _RuleState extends State<Rule> {
         centerTitle: true,
       ),
       body: FutureBuilder(
-        future: rulesDataFromCache(),
+        future: RuleController.rulesDataFromCache(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (!snapshot.hasError) {

@@ -30,7 +30,7 @@ class _BuildingMapState extends State<BuildingMap> {
 
   void initState() {
     super.initState();
-    print(data);
+
     print('------');
     setState(() {
       marker.add(Marker(
@@ -52,7 +52,6 @@ class _BuildingMapState extends State<BuildingMap> {
         centerTitle: true,
       ),
       body: GoogleMap(
-        
         // onTap: (LatLng latlng) {
         //   _mapTaped(latlng);
         // },

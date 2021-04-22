@@ -31,7 +31,7 @@ class _CurriculumViewState extends State<CurriculumView> {
           centerTitle: true,
         ),
         body: ProgramCurriculumBody(
-          programCourses: CourseCurriculumController().coursesPerYear(program['courses_curriculums']),
+          programCourses: CourseCurriculumController().coursesPerYear(program),
         ));
   }
 }

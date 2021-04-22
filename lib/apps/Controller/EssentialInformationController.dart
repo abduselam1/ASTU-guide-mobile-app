@@ -4,6 +4,38 @@ import 'package:astu_guide/common/services/url_service.dart';
 import 'package:dio/dio.dart';
 
 class EssentialInformationController {
+  static Future updateDrivers() async {
+    if (await Connection().isConnected()) {
+      try {
+        Response response =
+            await UrlService.get('essential-informations/ambulances');
+        await HiveService.clear('ambulance');
+        await HiveService.put(boxName: 'ambulance', data: response.data);
+      } catch (e) {
+        print(e);
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  static Future updateOffice() async {
+    if (await Connection().isConnected()) {
+      try {
+        Response response =
+            await UrlService.get('essential-informations/offices');
+        await HiveService.clear('offices');
+        await HiveService.put(boxName: 'offices', data: response.data);
+      } catch (e) {
+        print(e);
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
   Future getOfficeInfo() async {
     var officeFromCache = await HiveService.get('offices');
     if (officeFromCache == false) {
@@ -23,12 +55,12 @@ class EssentialInformationController {
     return office[0];
   }
 
-  Future ambulanceDrivers(String searchKeyWord) async {
+  static Future ambulanceDrivers(String searchKeyWord) async {
     var cacheData = await HiveService.get('ambulance');
 
     if (cacheData == false) {
       print("cache not availble");
-      if (true) {
+      if (await Connection().isConnected()) {
         /// connection checking
         Response response;
         try {

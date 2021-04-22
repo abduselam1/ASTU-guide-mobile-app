@@ -1,3 +1,4 @@
+import 'package:astu_guide/common/services/Connection.dart';
 import 'package:astu_guide/common/services/url_service.dart';
 import 'package:dio/dio.dart';
 
@@ -17,5 +18,17 @@ class LostIdController {
       print(e);
       return false;
     }
+  }
+
+  static Future showLostIds() async{
+    if (await Connection().isConnected()) {
+      try {
+        Response response = await UrlService.get('lostid');
+        return response.data;
+      } catch (e) {
+        return false;
+      }
+    }
+    return false;
   }
 }

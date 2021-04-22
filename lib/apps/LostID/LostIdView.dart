@@ -153,7 +153,6 @@ class _LostIdViewState extends State<LostIdView> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => LostIdShow()),
-          
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

@@ -2,6 +2,7 @@
 import 'package:astu_guide/apps/CourseCurriculum/CourseCurriculumView.dart';
 import 'package:astu_guide/apps/Courses/CoursesView.dart';
 import 'package:astu_guide/apps/Information/views/index.dart';
+import 'package:astu_guide/apps/LostID/LostIdShow.dart';
 import 'package:astu_guide/apps/event/Event.dart';
 import 'package:astu_guide/apps/map/BuildingView.dart';
 import 'package:astu_guide/common/constants/astu_guide_theme.dart';
@@ -115,7 +116,10 @@ class _DashboardChoiceState extends State<DashboardChoice> {
               ChoiceIcon(
                 title: 'Lost ID',
                 icon: Icons.payment,
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LostIdShow()));
+                },
                 color: Colors.blueGrey,
               ),
               ChoiceIcon(

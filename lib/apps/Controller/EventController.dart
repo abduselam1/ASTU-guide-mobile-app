@@ -5,6 +5,21 @@ import 'package:dio/dio.dart';
 
 class EventController{
 
+  static Future updateCourse() async {
+    if (await Connection().isConnected()) {
+      try {
+        Response response = await UrlService.get('academic-calendars');
+        await HiveService.clear('academic-calendars');
+        await HiveService.put(boxName: 'academic-calendars', data: response.data);
+      } catch (e) {
+        print(e);
+        return false;
+      }
+    }else{
+      return false;
+    }
+  }
+
   Future fetchEvents() async {
   try {
     var calenderFromCache = await HiveService.get('academic-calendars');

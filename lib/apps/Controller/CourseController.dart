@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:astu_guide/apps/Courses/Detail.dart';
+import 'package:astu_guide/common/services/Connection.dart';
 import 'package:astu_guide/common/services/HiveService.dart';
 import 'package:astu_guide/common/services/url_service.dart';
 import 'package:dio/dio.dart';
@@ -9,6 +10,21 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 class CourseController {
+  static Future updateCourse() async {
+    if (await Connection().isConnected()) {
+      try {
+        Response response = await UrlService.get('courses');
+        await HiveService.clear('courses');
+        await HiveService.put(boxName: 'courses', data: response.data);
+      } catch (e) {
+        print(e);
+        return false;
+      }
+    }else{
+      return false;
+    }
+  }
+
   static Future courses({searchKeyWord}) async {
     var courses = await HiveService.get('courses');
     if (courses == false) {
@@ -91,7 +107,7 @@ class CourseController {
     return isDownloaded;
   }
 
-  static Future isResourcesAvailable(resources,title) async {
+  static Future isResourcesAvailable(resources, title) async {
     Directory directory;
     if (Platform.isAndroid) {
       directory = await getExternalStorageDirectory();
@@ -113,10 +129,7 @@ class CourseController {
     }
     File file = File(directory.path);
     print(file.path);
-    return [
-      await file.exists(),
-      file
-    ];
+    return [await file.exists(), file];
     // if (await file.exists()) {
     //   return await file.exists();
     // } else {

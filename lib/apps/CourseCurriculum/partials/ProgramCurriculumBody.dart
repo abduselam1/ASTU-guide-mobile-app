@@ -66,54 +66,38 @@ class ProgramCurriculumBody extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 3.0),
-                child: Container(
-                  color: ASTUGuideTheme.teritiaryColor,
-                  height: 20.0,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Code',
-                          style: TextStyle(fontSize: 17.5),
-                        ),
+              Container(
+                color: ASTUGuideTheme.teritiaryColor,
+                height: 20.0,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Code',
+                        style: TextStyle(fontSize: 17.5),
                       ),
-                      Expanded(
-                        flex: 5,
-                        child: Text(
-                          'Title',
-                          style: TextStyle(fontSize: 17.5),
-                        ),
+                    ),
+                    Expanded(
+                      flex: 5,
+                      child: Text(
+                        'Title',
+                        style: TextStyle(fontSize: 17.5),
                       ),
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Cr-hour',
-                          style: TextStyle(fontSize: 17.5),
-                        ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Cr-hour',
+                        style: TextStyle(fontSize: 17.5),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              for (var item in programCourses[year[0]][0])
-                ListTile(
-                  onTap: () {},
-                  trailing: Text(
-                    '${item['course']['credit_hour']}',
-                    style: TextStyle(fontSize: 14.5),
-                  ),
-                  leading: Text(
-                    '${item['course']['code']}',
-                    style: TextStyle(fontSize: 14.5),
-                  ),
-                  title: Text(
-                    '${item['course']['title']}',
-                    style: TextStyle(fontSize: 14.5),
-                  ),
-                ),
+              Column(
+                children: displayCourses(context, programCourses[year[0]], 0),
+              ),
               // Row(
               //   children: [
               //     Expanded(
@@ -142,7 +126,7 @@ class ProgramCurriculumBody extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(0.0),
                 child: Container(
-                  height: 25.0,
+                  height: 30.0,
                   color: ASTUGuideTheme.primaryColor,
                   child: Row(
                     children: [
@@ -162,66 +146,157 @@ class ProgramCurriculumBody extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 5.0),
-                child: Container(
-                  height: 20.0,
-                  color: ASTUGuideTheme.teritiaryColor,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Code',
-                          style: TextStyle(fontSize: 17.5),
-                        ),
+              Container(
+                height: 25.0,
+                color: ASTUGuideTheme.teritiaryColor,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Code',
+                        style: TextStyle(fontSize: 17.5),
                       ),
-                      Expanded(
-                        flex: 5,
-                        child: Text(
-                          'Title',
-                          style: TextStyle(fontSize: 17.5),
-                        ),
+                    ),
+                    Expanded(
+                      flex: 5,
+                      child: Text(
+                        'Title',
+                        style: TextStyle(fontSize: 17.5),
                       ),
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Cr-hour',
-                          style: TextStyle(fontSize: 17.5),
-                        ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Cr-hour',
+                        style: TextStyle(fontSize: 17.5),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              for (var item in programCourses[year[0]][1])
-                ListTile(
-                  onTap: () {
-                    // print(item);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DetailCourses(
-                                  course: item['course'],
-                                )));
-                  },
-                  trailing: Text(
-                    '${item['course']['credit_hour']}',
-                    style: TextStyle(fontSize: 14.5),
-                  ),
-                  leading: Text(
-                    '${item['course']['code']}',
-                    style: TextStyle(fontSize: 14.5),
-                  ),
-                  title: Text(
-                    '${item['course']['title']}',
-                    style: TextStyle(fontSize: 14.5),
-                  ),
-                ),
+              Column(
+                children: displayCourses(context, programCourses[year[0]], 1),
+              ),
             ],
           ),
         );
       },
     );
+  }
+
+  List<Widget> displayCourses(context, List item, int semester) {
+    print(item[3]);
+    List<Widget> listTile = [];
+    for (var course in item[semester]) {
+      bool isElective = course['is_elective'] == 1 ? true : false;
+      if (isElective) continue;
+      listTile.add(ListTile(
+        onTap: () {
+          // print(item);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DetailCourses(
+                        course: course['course'],
+                      )));
+        },
+        trailing: Text(
+          '${course['course']['credit_hour']}',
+          style: TextStyle(fontSize: 14.5),
+        ),
+        leading: Text(
+          '${course['course']['code']}',
+          style: TextStyle(fontSize: 14.5),
+        ),
+        title: Text(
+          '${course['course']['title']}',
+          style: TextStyle(fontSize: 14.5),
+        ),
+      ));
+    } // first for loop
+    if (!item[3][semester].isEmpty) {
+      for (var i = 0; i < item[3][semester][0]; i++) {
+        listTile.add(ListTile(
+          onTap: () {
+            List electiveCourses = separateElectiveCourse(item[semester]);
+            showModalBottomSheet(
+                context: context,
+                builder: (BuildContext bc) {
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: electiveCourses.map((electiveCourse) {
+                        return ListTile(
+                          onTap: () {},
+                          trailing: Text(
+                            "${electiveCourse['course']['credit_hour']}",
+                            style: TextStyle(fontSize: 14.5),
+                          ),
+                          leading: Text(
+                            "${electiveCourse['course']['code']}",
+                            style: TextStyle(fontSize: 14.5),
+                          ),
+                          title: Text(
+                            '${electiveCourse['course']['title']}',
+                            style: TextStyle(fontSize: 14.5),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  );
+                });
+            print(electiveCourses);
+          },
+          trailing: Text(
+            '-',
+            style: TextStyle(fontSize: 14.5),
+          ),
+          leading: Text(
+            '-',
+            style: TextStyle(fontSize: 14.5),
+          ),
+          title: Text(
+            'Elective Course',
+            style: TextStyle(fontSize: 14.5),
+          ),
+        ));
+      }
+      for (var i = 0; i < item[3][semester][1]; i++) {
+        listTile.add(ListTile(
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'You can select any course from the compus',
+                  style: TextStyle(color: Colors.redAccent),
+                ),
+                duration: Duration(seconds: 10),
+              ),
+            );
+          },
+          trailing: Text(
+            '-',
+            style: TextStyle(fontSize: 14.5),
+          ),
+          leading: Text(
+            '-',
+            style: TextStyle(fontSize: 14.5),
+          ),
+          title: Text(
+            'Free elective course',
+            style: TextStyle(fontSize: 14.5),
+          ),
+        ));
+      }
+    }
+
+    return listTile;
+  }
+
+  List separateElectiveCourse(List courses) {
+    var filteredCourse = courses.where((element) {
+      return element['is_elective'] == 1 ? true : false;
+    });
+    return filteredCourse.toList();
   }
 }

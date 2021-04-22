@@ -18,4 +18,9 @@ class HiveService {
     //     box.add(value);
     // });
   }
+
+  static Future clear(String boxName) async {
+    Box box = await Hive.openBox(boxName);
+    await box.clear();
+  }
 }
