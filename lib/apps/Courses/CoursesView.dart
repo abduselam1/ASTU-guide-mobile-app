@@ -18,6 +18,7 @@ class _CourseViewState extends State<CourseView> {
       appBar: AppBar(
         title: TextFormField(
             decoration: InputDecoration(
+              hintStyle: TextStyle(color: Colors.white),
               border: InputBorder.none,
               hintText: "Search for Courses",
               // focusColor: ASTUGuideTheme.textFadedColor1

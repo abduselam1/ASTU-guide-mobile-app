@@ -13,6 +13,9 @@ class CourseCurriculumController {
 
       var curricula = await HiveService.get('curricula');
       return curricula[0];
+
+      // Response response = await UrlService.get('curricula');
+      // return response.data;
     } catch (e) {
       print(e);
       return false;
@@ -32,7 +35,7 @@ class CourseCurriculumController {
     Map<String, List<List>> program = {};
 
     /*
-    the first three index of the array is refers to the three Semester 
+    the first three index of the array is refers to the three Semester
     and the last index refers to information of the year
     */
     List<List> firstYear = [[], [], [], []];

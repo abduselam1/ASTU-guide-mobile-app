@@ -1,22 +1,20 @@
-import 'package:astu_guide/apps/Controller/LostIdController.dart';
-import 'package:astu_guide/apps/LostID/LostIdShow.dart';
 import 'package:astu_guide/apps/auth/views/partials/custom_text_form_field.dart';
+import 'package:astu_guide/apps/lost_id/controllers/lost_id_controller.dart';
 import 'package:astu_guide/common/constants/astu_guide_theme.dart';
-import 'package:astu_guide/main.dart';
 import 'package:flutter/material.dart';
 
-class LostIdView extends StatefulWidget {
+class LostIdAdd extends StatefulWidget {
   @override
-  _LostIdViewState createState() => _LostIdViewState();
+  _LostIdAddState createState() => _LostIdAddState();
 }
 
-class _LostIdViewState extends State<LostIdView> {
+class _LostIdAddState extends State<LostIdAdd> {
   bool loading = false;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _name = TextEditingController();
   final TextEditingController _phoneNumber = TextEditingController();
-  final TextEditingController _id = TextEditingController();
+  final TextEditingController _identifier = TextEditingController();
   String type;
 
   @override
@@ -51,6 +49,7 @@ class _LostIdViewState extends State<LostIdView> {
                                 return null;
                               },
                             ),
+                            Padding(padding: EdgeInsets.only(top: 15.0)),
                             DropdownButtonFormField(
                               validator: (value) {
                                 if (value == null) {
@@ -81,7 +80,7 @@ class _LostIdViewState extends State<LostIdView> {
                               }).toList(),
                             ),
                             CustomTextFormField(
-                              controller: _id,
+                              controller: _identifier,
                               labelText: "Card id",
                               keyboardType: TextInputType.text,
                               validator: (value) {
@@ -137,7 +136,7 @@ class _LostIdViewState extends State<LostIdView> {
       var register = await LostIdController().register(
         name: _name.text.trim(),
         type: type,
-        id: _id.text.trim(),
+        identifier: _identifier.text.trim(),
         phoneNumber: _phoneNumber.text.trim(),
       );
       if (register == true) {
@@ -152,7 +151,7 @@ class _LostIdViewState extends State<LostIdView> {
         );
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => LostIdShow()),
+          MaterialPageRoute(builder: (context) => LostIdAdd()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

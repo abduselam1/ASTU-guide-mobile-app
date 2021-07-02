@@ -37,4 +37,15 @@ class RegisterController {
       return false;
     }
   }
+
+  static Future<List<String>> programs() async {
+    try {
+      final Response response = await UrlService.get('auth/curricula/prepared');
+      print(response.data);
+      return response.data;
+    } on DioError catch (e) {
+      print(e.response.data);
+      return null;
+    }
+  }
 }

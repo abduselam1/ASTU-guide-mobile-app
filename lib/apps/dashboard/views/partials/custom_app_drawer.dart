@@ -1,5 +1,7 @@
+import 'package:astu_guide/apps/CourseCurriculum/CourseCurriculumView.dart';
 import 'package:astu_guide/apps/Courses/CoursesView.dart';
-import 'package:astu_guide/apps/LostID/LostIdView.dart';
+import 'package:astu_guide/apps/lost_id/lost_id_view.dart';
+import 'package:astu_guide/apps/lost_id/lost_id_add.dart';
 import 'package:astu_guide/apps/auth/controllers/login_controller.dart';
 import 'package:astu_guide/apps/auth/models/user_model.dart';
 import 'package:astu_guide/apps/map/BuildingView.dart';
@@ -62,12 +64,17 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
             title: Text('Curriculum'),
             onTap: () {
               Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CourseCurriculumView()));
             },
           ),
           ListTile(
             leading: Icon(Icons.layers),
             title: Text('Courses'),
             onTap: () {
+              Navigator.pop(context);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => CourseView()));
             },
@@ -86,31 +93,20 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
           ),
           ListTile(
             leading: Icon(Icons.add_to_photos_rounded),
-            title: Text('Add ATM'),
+            title: Text('Add ID or ATM'),
             onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LostIdAdd()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.search),
+            title: Text('Lost ID'),
+            onTap: () {
+              Navigator.pop(context);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => LostIdView()));
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.search),
-            title: Text('Search for lost ATM'),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.add_to_photos_rounded),
-            title: Text('Add ASTU ID'),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.search),
-            title: Text('Search for lost ASTU ID'),
-            onTap: () {
-              Navigator.pop(context);
             },
           ),
           Divider(height: 1),

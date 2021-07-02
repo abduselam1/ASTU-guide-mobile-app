@@ -1,9 +1,6 @@
 import 'package:astu_guide/apps/Controller/CourseCurriculumController.dart';
 import 'package:astu_guide/apps/CourseCurriculum/partials/CourseCurriculumBody.dart';
 import 'package:astu_guide/apps/Rules/partials/NetworkError.dart';
-import 'package:astu_guide/common/services/HiveService.dart';
-import 'package:astu_guide/common/services/url_service.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class CourseCurriculumView extends StatefulWidget {

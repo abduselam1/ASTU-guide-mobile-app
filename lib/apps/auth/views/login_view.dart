@@ -1,6 +1,7 @@
 import 'package:astu_guide/apps/auth/controllers/login_controller.dart';
 import 'package:astu_guide/apps/auth/views/forgot_password_view.dart';
 import 'package:astu_guide/apps/auth/views/partials/login_form.dart';
+import 'package:astu_guide/apps/auth/views/register_view.dart';
 import 'package:astu_guide/apps/dashboard/views/dashboard.dart';
 import 'package:astu_guide/common/constants/astu_guide_theme.dart';
 import 'package:astu_guide/common/views/partials/confirm_exit_dialog.dart';
@@ -97,8 +98,7 @@ class _LoginViewState extends State<LoginView> {
                                   Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          ForgotPasswordView(),
+                                      builder: (context) => RegisterView(),
                                     ),
                                     (Route<dynamic> route) => false,
                                   );

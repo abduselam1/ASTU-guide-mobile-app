@@ -5,7 +5,7 @@ import 'package:astu_guide/apps/Controller/CourseController.dart';
 import 'package:flutter/material.dart';
 
 class CourseBody extends StatefulWidget {
-  var courses;
+  final courses;
   CourseBody({this.courses});
 
   @override
@@ -31,9 +31,8 @@ class _CourseBodyState extends State<CourseBody> {
             ),
           );
           setState(() {
-            updated =1;
+            updated = 1;
           });
-          
         }
       },
       child: ListView.builder(
