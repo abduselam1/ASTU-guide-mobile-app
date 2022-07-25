@@ -6,10 +6,10 @@ import 'package:hive/hive.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-// 192.168.0.248
+  
+// 192.168.43.181
 class UrlService {
-  static final String baseUrl = 'http://192.168.8.107:4000';
+  static final String baseUrl = 'http://192.168.43.181:4000';
   static final String apiEndPoint = "$baseUrl/api/v1/mobile";
   static final String assetUrl = "$baseUrl/storage";
   static Dio dio = new Dio();

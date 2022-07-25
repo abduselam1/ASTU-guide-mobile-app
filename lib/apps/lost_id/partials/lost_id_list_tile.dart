@@ -84,7 +84,7 @@ class LostIdListTile extends StatelessWidget {
             children: [
               Icon(Icons.call, color: Color.fromRGBO(12, 12, 12, 0.5)),
               Text(
-                lostId.createdAt,
+                "${lostId.createdAt}",
                 style: TextStyle(color: Colors.black38),
               )
             ],

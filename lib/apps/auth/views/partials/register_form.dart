@@ -46,7 +46,7 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   String school;
   String deparment;
-  bool loading = true;
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
